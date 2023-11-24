@@ -462,7 +462,10 @@ maxs = {'alcohol': 15,
 # Read wines dataset
 print("Reading wines dataset.")
 ds_wine, ds_white, ds_red, features = read_ds_wine(f'{path}/data')
-
+if not os.path.exists(f'{path}/figures'):
+    os.makedirs(f'{path}/figures')
+if not os.path.exists(f'{path}/results'):
+    os.makedirs(f'{path}/results')
 
 # Logistic regression, compute weights of features.
 # Generate plot of weights in 'figures' folder.
