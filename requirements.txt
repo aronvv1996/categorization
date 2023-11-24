@@ -1,0 +1,9 @@
+matplotlib  #creating figures
+numpy       #various mathematical functions
+pandas      #dataset analysis and manipulation
+scipy       #various mathematical functions
+sklearn     #logistic regression model
+
+#joblib can be ignored if not using multiprocessing,
+#see settings.py
+joblib      #pipelining for multiprocessing
