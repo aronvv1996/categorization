@@ -34,7 +34,7 @@ def read_ds_wine(path, fileName="ds_wine.csv"):
     ds_wine.fillna(" ")
 
     ds_white = ds_wine[ds_wine['color'] == 0]
-    ds_red = ds_wine[ds_wine['color']== 1]
+    ds_red = ds_wine[ds_wine['color'] == 1]
 
     features = list(ds_wine.columns[:-2])
 
@@ -95,11 +95,11 @@ def logistic_regression(dataSet, showPlot=False, figSize=(10,6)):
         plt.title(f"Logistic regression feature weights (Wines dataset)")
         plt.bar([y for (x,y) in main_features],[x for (x,y) in main_features], zorder=3)
         plt.subplots_adjust(bottom=0.2)
-        plt.savefig(f'{path}/figures/logres_feature_weights.png', bbox_inches='tight')
+        plt.savefig(f'{path}/figures/wine/logres_feature_weights.png', bbox_inches='tight')
         plt.close()
 
     # save main feature weight results
-    f = open(f'{path}/results/logres_feature_weights.txt', 'w')
+    f = open(f'{path}/results/wine/logres_feature_weights.txt', 'w')
     f.write(str(main_features))
     f.close()
 
@@ -172,11 +172,11 @@ def kde_1(dataSet, features, mins=None, maxs=None, showPlot=False, figSize=(10,1
                 plt.legend(handles=[blue_patch,red_patch,black_patch])
             else:
                 plt.legend(handles=[blue_patch,red_patch])
-            plt.savefig(f'{path}/figures/1D_dist_{feature}.png', bbox_inches='tight')
+            plt.savefig(f'{path}/figures/wine/1D_dist_{feature}.png', bbox_inches='tight')
             plt.close()
         
     # save standard classifiers
-    f = open(f'{path}/results/classifiers.txt', 'w')
+    f = open(f'{path}/results/wine/classifiers.txt', 'w')
     f.write(str(classifiers))
     f.close()
     
@@ -234,7 +234,7 @@ def kde_2(dataSet, features, mins=None, maxs=None, showPlot=False, figSize=(10,1
         blue_patch = mpatches.Patch(color='blue', label='White wine')
         red_patch = mpatches.Patch(color='red', label='Red wine')
         plt.legend(handles=[blue_patch,red_patch])
-        plt.savefig(f'{path}/figures/2D_dist_{features}', bbox_inches='tight')
+        plt.savefig(f'{path}/figures/wine/2D_dist_{features}', bbox_inches='tight')
         plt.close()
     return kde_w, kde_r
 
@@ -270,8 +270,6 @@ def kde_3(dataSet, features, mins=None, maxs=None, showPlot=False, createAnimati
         xmax, ymax, zmax = [max(dataSet[f]) for f in features]
     
     # compute KDE's
-    #X, Y, Z = np.mgrid[xmin:xmax:100j, ymin:ymax:100j, zmin:zmax:100j]
-    #eval_points = np.vstack([X.ravel(), Y.ravel(), Z.ravel()])
     x_w, y_w, z_w = [ds_white[f] for f in features]
     f_w = np.vstack([x_w, y_w, z_w])
     kde_w = gaussian_kde(f_w)
@@ -300,7 +298,7 @@ def kde_3(dataSet, features, mins=None, maxs=None, showPlot=False, createAnimati
 
         if createAnimation:
             frames = []
-            frames_dir = f"{path}/figures/frames"
+            frames_dir = f"{path}/figures/wine/frames"
             if not os.path.exists(frames_dir):
                 os.makedirs(frames_dir)
             for file in os.listdir(frames_dir):
@@ -310,7 +308,7 @@ def kde_3(dataSet, features, mins=None, maxs=None, showPlot=False, createAnimati
                 plt.savefig(f'{frames_dir}/frame_{i:03}.png', bbox_inches='tight')
             for file in os.listdir(frames_dir):
                 frames.append(Image.open(f"{frames_dir}/{file}"))
-            imageio.mimsave(f'{path}/figures/3D_dist_{features}.gif', frames)
+            imageio.mimsave(f'{path}/figures/wine/3D_dist_{features}.gif', frames)
             for file in os.listdir(frames_dir):
                 os.remove(f"{frames_dir}/{file}")
             os.rmdir(frames_dir)
@@ -462,10 +460,10 @@ maxs = {'alcohol': 15,
 # Read wines dataset
 print("Reading wines dataset.")
 ds_wine, ds_white, ds_red, features = read_ds_wine(f'{path}/data')
-if not os.path.exists(f'{path}/figures'):
-    os.makedirs(f'{path}/figures')
-if not os.path.exists(f'{path}/results'):
-    os.makedirs(f'{path}/results')
+if not os.path.exists(f'{path}/figures/wine'):
+    os.makedirs(f'{path}/figures/wine')
+if not os.path.exists(f'{path}/results/wine'):
+    os.makedirs(f'{path}/results/wine')
 
 # Logistic regression, compute weights of features.
 # Generate plot of weights in 'figures' folder.
@@ -517,9 +515,9 @@ if use_multiprocessing:
     overlaps = {d[0]:c for (a,b,c,d) in res}
 if not use_multiprocessing:
     for f in features:
-        area_w, area_r, area_both, features = compute_overlap(ds_wine, [f], mins, maxs, samples=20_000)
-        overlaps = {f:area_both}
-f = open(f'{path}/results/overlap.txt', 'w')
+        _,_,overlap,_ = compute_overlap(ds_wine, [f], mins, maxs, samples=20_000)
+        overlaps[f] = overlap
+f = open(f'{path}/results/wine/overlap.txt', 'w')
 f.write(str(overlaps))
 f.close()
 
@@ -529,7 +527,7 @@ f.close()
 # locally to the 'results' folder.
 print("Computing misclassification probabilities.")
 misclassification = compute_misclassification(ds_wine, features, classifiers)
-f = open(f'{path}/results/misclassification.txt', 'w')
+f = open(f'{path}/results/wine/misclassification.txt', 'w')
 f.write(str(misclassification))
 f.close()
 
@@ -549,5 +547,5 @@ plt.subplots_adjust(bottom=0.2)
 blue_patch = mpatches.Patch(color='blue', label='Area of overlap')
 orange_patch = mpatches.Patch(color='orange', label='Probability of misclassification')
 plt.legend(handles=[blue_patch,orange_patch])
-plt.savefig(f'{path}/figures/overlap_misclassification_values_histogram.png', bbox_inches='tight')
+plt.savefig(f'{path}/figures/wine/overlap_misclassification_values_histogram.png', bbox_inches='tight')
 plt.close()

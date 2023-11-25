@@ -1,2 +1,5 @@
 # folders
 __pycache__/
+
+# dataset
+data/Dataset2_TFIDF_anon2.csv
