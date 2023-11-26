@@ -1,5 +1,10 @@
 # Categorization
+
 <p align="justify"> This repository showcases the work our group has done over the course of the modelling week. It presents a variety of methods written in Python meant for visualizing data in 1/2/3 dimensions, approximating sample distributions via Gaussian KDE, logistic regression of features, computing overlap areas and misclassification probabilities for (selections of) features. The final result underlines how overlap areas differ from misclassification probabilities, and how computing overlap can identify features with a better distinction between two classes. </p>
+
+<p align="center">
+  <img src="figures/wine/3D_dist_('chlorides', 'volatile acidity', 'sulphates').gif" width="400" height="400"> <img src="figures/wine/3D_dist_('chlorides', 'volatile acidity', 'total sulfur dioxide').gif" width="400" height="400">
+</p>
 
 - <p align="justify"> "Wine_categorization.py" is structured to give an automatic showcase of our results. Hopefully it is self-evident how to adapt the methods in this file to your own desire. For more info, see Section **Wine categorization methods** below. </p>
 
