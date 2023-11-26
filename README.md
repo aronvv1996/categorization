@@ -71,3 +71,7 @@ A list of methods in "Website_categorization.py":
 - **kde_n(dataSet, features, includeZeroes='none')**:  <p align="justify"> Generalization of kde to n dimensions without creating figures. </p>
 - **compute_overlap(dataSet, features, includeZeroes='none', samples=20_000)**:  <p align="justify"> Computes the n-dimensional overlapping area of probability densities of non-innovative and innovative companies for every feature listed in "features". This is done via Monte Carlo, so one should be careful to take enough samples, especially when considering many features simultaneously. </p>
 - **compute_misclassification(dataSet, features, classifiers, includeZeroes='none')**:  <p align="justify"> Computes the 1D probability of misclassification of a randomly selected website from the dataset from a given feature. "features" requires a list of features that will all be considered separately. "classifiers" is the list of classifiers computed previously by the function kde_1. </p>
+
+## Authors
+
+This project is a collaboration of five students of the TU/e: Pim de Haan, Saskia IJntema, Lieke Janssen, Katarzyna Kasperkiewicz, and Aron van Veldhuizen.
