@@ -1,7 +1,5 @@
 from Distribution import Distribution
 from itertools import combinations
-import matplotlib
-matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import matplotlib.patches as mpatches
 import numpy as np
@@ -16,6 +14,8 @@ import sklearn.metrics
 from sklearn.linear_model import LogisticRegression
 
 if use_multiprocessing:
+    import matplotlib
+    matplotlib.use('Agg')
     from joblib import Parallel, delayed
     import multiprocessing
     if num_cores is None:
@@ -479,11 +479,9 @@ def compute_misclassification(dataSet, features, classifiers, includeZeroes='non
         nr_noninnovatives = len(ds_ninnov)
         nr_innovatives = len(ds_innov)
         if c[1] == 0: # feature value under classifier is classified as non-innovative
-            print(feature, c[0], kernel_innov.integrate_box_1d(-1, c[0]), kernel_ninnov.integrate_box_1d(c[0], 2))
             misclassification[feature] = kernel_innov.integrate_box_1d(-1, c[0])*nr_innovatives/nr_websites + \
                                          kernel_ninnov.integrate_box_1d(c[0], 2)*nr_noninnovatives/nr_websites
         if c[1] == 1: # feature value under classifier is classified as innovative
-            print(feature, c[0], kernel_ninnov.integrate_box_1d(-1, c[0]), kernel_innov.integrate_box_1d(c[0], 2))
             misclassification[feature] = kernel_ninnov.integrate_box_1d(-1, c[0])*nr_noninnovatives/nr_websites + \
                                          kernel_innov.integrate_box_1d(c[0], 2)*nr_innovatives/nr_websites
 

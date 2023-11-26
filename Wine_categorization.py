@@ -13,6 +13,8 @@ import sklearn.metrics
 from sklearn.linear_model import LogisticRegression
 
 if use_multiprocessing:
+    import matplotlib
+    matplotlib.use('Agg')
     from joblib import Parallel, delayed
     import multiprocessing
     if num_cores is None:
